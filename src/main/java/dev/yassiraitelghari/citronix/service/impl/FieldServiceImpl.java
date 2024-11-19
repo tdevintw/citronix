@@ -4,10 +4,7 @@ package dev.yassiraitelghari.citronix.service.impl;
 import dev.yassiraitelghari.citronix.domain.Farm;
 import dev.yassiraitelghari.citronix.domain.Field;
 import dev.yassiraitelghari.citronix.dto.Field.FieldCreateDTO;
-import dev.yassiraitelghari.citronix.exception.FarmWithUUIDNotFoundException;
-import dev.yassiraitelghari.citronix.exception.FieldAreaPassLeftFarmSize;
-import dev.yassiraitelghari.citronix.exception.FieldAreaPassedHalfOfFarmException;
-import dev.yassiraitelghari.citronix.exception.PassTenFieldsPerFarmException;
+import dev.yassiraitelghari.citronix.exception.*;
 import dev.yassiraitelghari.citronix.repository.FieldRepository;
 import dev.yassiraitelghari.citronix.service.FarmService;
 import dev.yassiraitelghari.citronix.service.FieldService;
@@ -23,6 +20,9 @@ public class FieldServiceImpl implements FieldService {
     private final FieldRepository fieldRepository;
     private final FarmService farmService;
 
+    public Optional<Field> findById(UUID id){
+        return fieldRepository.findById(id);
+    }
     public FieldServiceImpl(@Qualifier("FarmServiceImpl") FarmService farmService, FieldRepository fieldRepository) {
         this.farmService = farmService;
         this.fieldRepository = fieldRepository;
@@ -51,6 +51,14 @@ public class FieldServiceImpl implements FieldService {
 
     public boolean isFieldAreaLessThenLeftFarmSize(FieldCreateDTO fieldCreateDTO, Farm farm) {
         return (farm.getArea() - farmService.sumOfFieldAreaOfFarm(farm)) > fieldCreateDTO.getArea();
+    }
+
+    public void delete(UUID id) {
+        Optional<Field> field = this.findById(id);
+        if(field.isEmpty()){
+            throw new FieldWithUUIDNotFoundException();
+        }
+        fieldRepository.deleteById(id);
     }
 
 

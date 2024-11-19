@@ -6,5 +6,7 @@ import dev.yassiraitelghari.citronix.dto.Field.FieldCreateDTO;
 import java.util.UUID;
 
 public interface FieldService {
-    Field create(UUID id , FieldCreateDTO fieldCreateDTO);
+    Field create(UUID id, FieldCreateDTO fieldCreateDTO);
+
+    void delete(UUID id);
 }
