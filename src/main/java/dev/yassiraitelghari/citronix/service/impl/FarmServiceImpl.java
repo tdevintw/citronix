@@ -6,7 +6,7 @@ import dev.yassiraitelghari.citronix.exception.FarmWithUUIDNotFoundException;
 import dev.yassiraitelghari.citronix.mapper.FarmMapper;
 import dev.yassiraitelghari.citronix.repository.FarmRepository;
 import dev.yassiraitelghari.citronix.service.FarmService;
-import dev.yassiraitelghari.citronix.vm.FarmCreationVM;
+import dev.yassiraitelghari.citronix.vm.FarmVM;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,8 +48,13 @@ public class FarmServiceImpl implements FarmService {
         return farmRepository.save(farm);
     }
 
-    public List<FarmCreationVM> farmsWithFieldsAreaLessThen4000M() {
+    public List<FarmVM> farmsWithFieldsAreaLessThen4000M() {
         List<Farm> farms = farmRepository.farmsWithFieldsAreaLessThen4000M();
-        return farms.stream().map(FarmCreationVM::new).toList();
+        return farms.stream().map(FarmVM::new).toList();
     }
+
+    public int countFieldsOfAFarm(Farm farm) {
+       return farmRepository.countFieldsOfAFarm(farm.getId());
+    }
+
 }

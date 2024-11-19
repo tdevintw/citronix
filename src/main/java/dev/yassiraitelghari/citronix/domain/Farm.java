@@ -1,6 +1,8 @@
 package dev.yassiraitelghari.citronix.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ public class Farm {
     private UUID id ;
     private String name ;
     private String location ;
+    private double area;
     private LocalDateTime creationDate ;
     @OneToMany(mappedBy = "farm")
     private List<Field> fields;

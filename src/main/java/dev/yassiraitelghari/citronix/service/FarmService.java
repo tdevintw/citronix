@@ -2,7 +2,7 @@ package dev.yassiraitelghari.citronix.service;
 
 import dev.yassiraitelghari.citronix.domain.Farm;
 import dev.yassiraitelghari.citronix.dto.Farm.FarmCreateDTO;
-import dev.yassiraitelghari.citronix.vm.FarmCreationVM;
+import dev.yassiraitelghari.citronix.vm.FarmVM;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +19,7 @@ public interface FarmService {
 
     Farm update(UUID id, FarmCreateDTO farmCreateDTO);
 
-    List<FarmCreationVM> farmsWithFieldsAreaLessThen4000M();
+    List<FarmVM> farmsWithFieldsAreaLessThen4000M();
 
+    int countFieldsOfAFarm(Farm farm);
 }
