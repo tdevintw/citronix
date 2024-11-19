@@ -1,6 +1,7 @@
 package dev.yassiraitelghari.citronix.exception.global;
 
 import dev.yassiraitelghari.citronix.exception.FarmWithUUIDNotFoundException;
+import dev.yassiraitelghari.citronix.exception.FieldAreaPassLeftFarmSize;
 import dev.yassiraitelghari.citronix.exception.FieldAreaPassedHalfOfFarmException;
 import dev.yassiraitelghari.citronix.exception.PassTenFieldsPerFarmException;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(PassTenFieldsPerFarmException.class)
-    public ResponseEntity<?> hanndeFarmReachedTopFieldSize(PassTenFieldsPerFarmException e){
+    public ResponseEntity<?> handleFarmReachedTopFieldSize(PassTenFieldsPerFarmException e){
         return ResponseEntity.badRequest().body(e.getMessage()) ;
+    }
+
+    @ExceptionHandler(FieldAreaPassLeftFarmSize.class)
+    public ResponseEntity<?> handleFieldPassLeftFarmSize(FieldAreaPassLeftFarmSize e){
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

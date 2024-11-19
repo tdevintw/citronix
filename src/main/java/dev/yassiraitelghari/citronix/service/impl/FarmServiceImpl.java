@@ -54,7 +54,12 @@ public class FarmServiceImpl implements FarmService {
     }
 
     public int countFieldsOfAFarm(Farm farm) {
-       return farmRepository.countFieldsOfAFarm(farm.getId());
+        return farmRepository.countFieldsOfAFarm(farm.getId());
+    }
+
+    public double sumOfFieldAreaOfFarm(Farm farm) {
+        Integer sum =  farmRepository.sumOfFieldAreaOfFarm(farm.getId());
+        return  sum==null ? 0.0 : sum.doubleValue();
     }
 
 }

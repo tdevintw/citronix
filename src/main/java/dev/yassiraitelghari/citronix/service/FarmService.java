@@ -22,4 +22,6 @@ public interface FarmService {
     List<FarmVM> farmsWithFieldsAreaLessThen4000M();
 
     int countFieldsOfAFarm(Farm farm);
+
+    double sumOfFieldAreaOfFarm(Farm farm);
 }

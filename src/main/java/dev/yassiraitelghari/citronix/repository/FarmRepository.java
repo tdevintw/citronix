@@ -14,7 +14,11 @@ public interface FarmRepository extends JpaRepository<Farm, UUID> {
     @Query("SELECT f FROM Farm f JOIN Field fi ON f.id = fi.farm.id GROUP BY f.id HAVING SUM(fi.area) < 4000")
     List<Farm> farmsWithFieldsAreaLessThen4000M();
 
-    @Query("SELECT COUNT(*) FROM Field f WHERE f.farm.id =: id")
+    @Query("SELECT COUNT(*) FROM Field f WHERE f.farm.id =:id")
     int countFieldsOfAFarm(UUID id);
+
+    @Query("SELECT SUM(f.area) FROM Field  f WHERE f.farm.id=:id")
+    Integer sumOfFieldAreaOfFarm(UUID id);
+
 
 }

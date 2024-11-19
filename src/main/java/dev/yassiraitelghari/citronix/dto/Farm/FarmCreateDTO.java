@@ -22,8 +22,7 @@ public class FarmCreateDTO {
     @Size(min = 5 , max = 20 , message = "Location  must be between 5 to 20 characters")
     private String location ;
 
-    @Positive(message = "Farm area cant be negative")
-    @NotBlank(message = "Area is required")
+    @Min(value = 2000 , message = "Area is required and must be greater or equal 2000")
     private double area;
 
     @NotNull
