@@ -6,6 +6,9 @@ spring:
       lifecycle-management: start_only
 
 
+  liquibase:
+    enabled: true
+    change-log: db/changelog/master.yaml
 
   jpa:
     properties:

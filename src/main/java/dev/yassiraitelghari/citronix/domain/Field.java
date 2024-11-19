@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,4 +22,6 @@ public class Field {
     private double area ;
     @ManyToOne
     private Farm farm ;
+    @OneToMany(mappedBy = "field")
+    private List<Tree> trees ;
 }

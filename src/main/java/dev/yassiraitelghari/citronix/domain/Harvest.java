@@ -1,5 +1,6 @@
 package dev.yassiraitelghari.citronix.domain;
 
+import dev.yassiraitelghari.citronix.domain.enums.Season;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,21 +11,24 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Farm {
-
+@Entity
+public class Harvest {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id ;
-    private String name ;
-    private String location ;
-    private LocalDateTime creationDate ;
-    @OneToMany(mappedBy = "farm")
-    private List<Field> fields;
 
+    private double totalQuantity ;
+
+    private LocalDateTime harvestDate ;
+
+    private Season season ;
+
+    @OneToMany(mappedBy = "harvest")
+    private List<HarvestDetail> harvestDetails ;
+
+    @OneToMany(mappedBy = "harvest")
+    private List<Sell> sells;
 }

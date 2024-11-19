@@ -10,21 +10,22 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Farm {
-
+@Entity
+public class Tree {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id ;
-    private String name ;
-    private String location ;
-    private LocalDateTime creationDate ;
-    @OneToMany(mappedBy = "farm")
-    private List<Field> fields;
+    private UUID id;
+
+    private LocalDateTime plantingDate;
+
+    private int age ;
+    @ManyToOne
+    private Field field ;
+
+    @OneToMany(mappedBy = "tree")
+    private List<HarvestDetail> harvestDetails;
 
 }
