@@ -20,9 +20,10 @@ public class FieldServiceImpl implements FieldService {
     private final FieldRepository fieldRepository;
     private final FarmService farmService;
 
-    public Optional<Field> findById(UUID id){
+    public Optional<Field> findById(UUID id) {
         return fieldRepository.findById(id);
     }
+
     public FieldServiceImpl(@Qualifier("FarmServiceImpl") FarmService farmService, FieldRepository fieldRepository) {
         this.farmService = farmService;
         this.fieldRepository = fieldRepository;
@@ -53,13 +54,31 @@ public class FieldServiceImpl implements FieldService {
         return (farm.getArea() - farmService.sumOfFieldAreaOfFarm(farm)) > fieldCreateDTO.getArea();
     }
 
+    public boolean isFieldAreaLessThenLeftFarmSize(FieldCreateDTO fieldCreateDTO, Farm farm, Field field) {
+        return (farm.getArea() - farmService.sumOfFieldAreaOfFarm(farm) + field.getArea()) > fieldCreateDTO.getArea();
+    }
+
+
     public void delete(UUID id) {
         Optional<Field> field = this.findById(id);
-        if(field.isEmpty()){
+        if (field.isEmpty()) {
             throw new FieldWithUUIDNotFoundException();
         }
         fieldRepository.deleteById(id);
     }
 
-
+    public Field update(UUID id, FieldCreateDTO fieldCreateDTO) {
+        Optional<Field> field = this.findById(id);
+        if (field.isEmpty()) {
+            throw new FieldWithUUIDNotFoundException();
+        }
+        Farm farm = field.get().getFarm();
+        if (!this.isAreaLessThenHalf(fieldCreateDTO, farm)) {
+            throw new FieldAreaPassedHalfOfFarmException();
+        } else if (!this.isFieldAreaLessThenLeftFarmSize(fieldCreateDTO, farm, field.get())) {
+            throw new FieldAreaPassLeftFarmSize();
+        }
+        field.get().setArea(fieldCreateDTO.getArea());
+        return fieldRepository.save(field.get());
+    }
 }

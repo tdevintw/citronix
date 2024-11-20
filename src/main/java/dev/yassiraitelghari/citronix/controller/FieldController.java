@@ -25,16 +25,20 @@ public class FieldController {
     @PostMapping("/{id}")
     public ResponseEntity<?> create(@PathVariable UUID id, @Valid @RequestBody FieldCreateDTO fieldCreateDTO) {
         Field field = fieldService.create(id, fieldCreateDTO);
-        FieldVM fieldVM = new FieldVM(field.getFarm().getName(), field.getFarm().getArea(), field.getArea());
+        FieldVM fieldVM = new FieldVM(field);
         return ResponseEntity.status(201).body(fieldVM);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable UUID id){
-        fieldService.delete(id) ;
+    public ResponseEntity<?> delete(@PathVariable UUID id) {
+        fieldService.delete(id);
         return ResponseEntity.status(201).body("Field was deleted");
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<?> update(@Valid)
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable UUID id, @Valid @RequestBody FieldCreateDTO fieldCreateDTO) {
+        Field field = fieldService.update(id, fieldCreateDTO);
+        FieldVM fieldVM = new FieldVM(field);
+        return ResponseEntity.status(201).body(fieldVM);
+    }
 }

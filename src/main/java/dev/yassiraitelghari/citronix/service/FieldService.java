@@ -9,4 +9,6 @@ public interface FieldService {
     Field create(UUID id, FieldCreateDTO fieldCreateDTO);
 
     void delete(UUID id);
+
+    Field update(UUID id , FieldCreateDTO fieldCreateDTO);
 }
