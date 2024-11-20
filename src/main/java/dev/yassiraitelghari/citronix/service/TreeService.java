@@ -6,6 +6,7 @@ import java.util.UUID;
 
 public interface TreeService {
 
+    Tree findById(UUID id);
     Tree create(UUID id);
 
     double treeProductivity(Tree tree);

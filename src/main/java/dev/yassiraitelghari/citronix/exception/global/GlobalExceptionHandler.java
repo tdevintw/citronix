@@ -59,4 +59,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleSpaceNotAvailableForPlanting(SpaceBetweenTreesException e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler(TreeWithUUIDNotFoundException.class)
+    public ResponseEntity<?> handleTreeWithUUIDNotFound(TreeWithUUIDNotFoundException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }

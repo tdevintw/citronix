@@ -5,6 +5,7 @@ import dev.yassiraitelghari.citronix.domain.Tree;
 import dev.yassiraitelghari.citronix.exception.FieldWithUUIDNotFoundException;
 import dev.yassiraitelghari.citronix.exception.SpaceBetweenTreesException;
 import dev.yassiraitelghari.citronix.exception.TreePlantingException;
+import dev.yassiraitelghari.citronix.exception.TreeWithUUIDNotFoundException;
 import dev.yassiraitelghari.citronix.repository.TreeRepository;
 import dev.yassiraitelghari.citronix.service.FieldService;
 import dev.yassiraitelghari.citronix.service.TreeService;
@@ -28,13 +29,19 @@ public class TreeServiceImpl implements TreeService {
         this.fieldService = fieldService;
     }
 
+    public  Tree findById(UUID id){
+        return treeRepository.findById(id).orElseThrow(TreeWithUUIDNotFoundException::new);
+    }
+
     public Tree create(UUID id) {
         Optional<Field> fieldOptional = fieldService.findById(id);
         if (fieldOptional.isEmpty()) {
             throw new FieldWithUUIDNotFoundException();
-        } else if (!this.isPlantingMonthAccurate()) {
-            throw new TreePlantingException();
-        } else if (!fieldService.isTreePlantingAvailableInField(fieldOptional.get())) {
+        }
+//        else if (!this.isPlantingMonthAccurate()) {
+//            throw new TreePlantingException();
+//        }
+        else if (!fieldService.isTreePlantingAvailableInField(fieldOptional.get())) {
             throw new SpaceBetweenTreesException();
         }
 
