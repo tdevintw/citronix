@@ -1,7 +1,6 @@
 package dev.yassiraitelghari.citronix.controller;
 
 import dev.yassiraitelghari.citronix.domain.Tree;
-import dev.yassiraitelghari.citronix.dto.Tree.TreeCreateDTO;
 import dev.yassiraitelghari.citronix.service.TreeService;
 import dev.yassiraitelghari.citronix.vm.TreeVM;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +20,10 @@ public class TreeController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<?> create(@PathVariable UUID id, TreeCreateDTO treeCreateDTO) {
-       Tree tree =  treeService.create(id ,treeCreateDTO);
+    public ResponseEntity<?> create(@PathVariable UUID id) {
+       Tree tree =  treeService.create(id);
         TreeVM treeVM = new TreeVM(tree);
+        treeVM.setProductivity(treeService.treeProductivity(tree));
         return ResponseEntity.status(201).body(treeVM);
     }
 }

@@ -21,7 +21,6 @@ public class Tree {
 
     private LocalDateTime plantingDate;
 
-    private int age ;
     @ManyToOne
     private Field field ;
 

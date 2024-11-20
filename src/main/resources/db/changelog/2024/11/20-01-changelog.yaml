@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1732098430791-3
+      author: Yasser
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: age
+            tableName: tree
+
