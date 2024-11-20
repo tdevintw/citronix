@@ -16,4 +16,7 @@ public interface HarvestDetailRepository extends JpaRepository<HarvestDetail , U
 
     @Query("SELECT hd FROM HarvestDetail hd WHERE hd.tree.field.id =:id AND hd.harvest IS NULL")
     List<HarvestDetail> harvestDetailOfField(UUID id);
+
+    @Query("SELECT COUNT(hd.id) FROM HarvestDetail hd WHERE hd.tree.field.id =:id AND hd.harvest IS NULL")
+    int countHarvestedDetailNotCalculatedInAHarvestField(UUID id);
 }

@@ -29,7 +29,7 @@ public class HarvestDetailDetailServiceImpl implements HarvestDetailService {
         this.harvestDetailRepository = harvestDetailRepository;
     }
 
-    public Optional<HarvestDetail> findById(UUID id){
+    public Optional<HarvestDetail> findById(UUID id) {
         return harvestDetailRepository.findById(id);
     }
 
@@ -61,14 +61,18 @@ public class HarvestDetailDetailServiceImpl implements HarvestDetailService {
 
     public void delete(UUID id) {
         Optional<HarvestDetail> harvestDetail = this.findById(id);
-        if(harvestDetail.isEmpty()){
+        if (harvestDetail.isEmpty()) {
             throw new HarvestDetailWithUUIDNotFoundException();
         }
         harvestDetailRepository.deleteById(id);
     }
 
-    public List<HarvestDetail> harvestDetailsOfAField(Field field){
+    public List<HarvestDetail> harvestDetailsOfAField(Field field) {
         return harvestDetailRepository.harvestDetailOfField(field.getId());
+    }
+
+    public int harvestDetailsOfFieldNotYetCalculatedInHarvest(Field field) {
+        return harvestDetailRepository.countHarvestedDetailNotCalculatedInAHarvestField(field.getId());
     }
 
 }

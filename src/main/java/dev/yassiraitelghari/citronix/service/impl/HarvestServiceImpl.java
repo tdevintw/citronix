@@ -3,7 +3,7 @@ package dev.yassiraitelghari.citronix.service.impl;
 import dev.yassiraitelghari.citronix.domain.Field;
 import dev.yassiraitelghari.citronix.domain.Harvest;
 import dev.yassiraitelghari.citronix.domain.HarvestDetail;
-import dev.yassiraitelghari.citronix.domain.Tree;
+import dev.yassiraitelghari.citronix.exception.FieldAlreadyHarvestedForTheSeasonException;
 import dev.yassiraitelghari.citronix.exception.FieldWithUUIDNotFoundException;
 import dev.yassiraitelghari.citronix.exception.NoTreesPlantedInFieldException;
 import dev.yassiraitelghari.citronix.repository.HarvestRepository;
@@ -11,7 +11,6 @@ import dev.yassiraitelghari.citronix.service.FieldService;
 import dev.yassiraitelghari.citronix.service.HarvestDetailService;
 import dev.yassiraitelghari.citronix.service.HarvestService;
 import dev.yassiraitelghari.citronix.service.TreeService;
-import dev.yassiraitelghari.citronix.vm.HarvestVM;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +39,8 @@ public class HarvestServiceImpl implements HarvestService {
             throw new FieldWithUUIDNotFoundException();
         } else if (field.get().getTrees().isEmpty()) {
             throw new NoTreesPlantedInFieldException();
+        }else if(fieldService.isFieldHarvestedForThisSeason(field.get())){
+            throw new FieldAlreadyHarvestedForTheSeasonException();
         }
         double count = harvestRepository.totalQuantityOfHarvestTreesOfAField(id);
         Harvest harvest = new Harvest();
@@ -50,7 +51,6 @@ public class HarvestServiceImpl implements HarvestService {
         harvest.setTotalQuantity(count);
         harvestRepository.save(harvest);
         return harvestRepository.save(harvest);
-
     }
 
 

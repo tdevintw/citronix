@@ -17,4 +17,6 @@ public interface FieldService {
     Field update(UUID id, FieldCreateDTO fieldCreateDTO);
 
     boolean isTreePlantingAvailableInField(Field field);
+
+    boolean isFieldHarvestedForThisSeason(Field field);
 }

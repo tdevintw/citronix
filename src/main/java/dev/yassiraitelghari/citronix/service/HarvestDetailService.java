@@ -19,4 +19,6 @@ public interface HarvestDetailService {
     void delete(UUID id);
 
     List<HarvestDetail> harvestDetailsOfAField(Field field);
+
+    int harvestDetailsOfFieldNotYetCalculatedInHarvest(Field field);
 }

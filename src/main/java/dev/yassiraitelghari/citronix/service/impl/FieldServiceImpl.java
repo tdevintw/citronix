@@ -8,6 +8,7 @@ import dev.yassiraitelghari.citronix.exception.*;
 import dev.yassiraitelghari.citronix.repository.FieldRepository;
 import dev.yassiraitelghari.citronix.service.FarmService;
 import dev.yassiraitelghari.citronix.service.FieldService;
+import dev.yassiraitelghari.citronix.service.HarvestDetailService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +20,16 @@ public class FieldServiceImpl implements FieldService {
 
     private final FieldRepository fieldRepository;
     private final FarmService farmService;
+    private final HarvestDetailService harvestDetailService;
 
     public Optional<Field> findById(UUID id) {
         return fieldRepository.findById(id);
     }
 
-    public FieldServiceImpl(@Qualifier("FarmServiceImpl") FarmService farmService, FieldRepository fieldRepository) {
+    public FieldServiceImpl(@Qualifier("FarmServiceImpl") FarmService farmService, FieldRepository fieldRepository, @Qualifier("HarvestDetailServiceImpl") HarvestDetailService harvestDetailService) {
         this.farmService = farmService;
         this.fieldRepository = fieldRepository;
+        this.harvestDetailService = harvestDetailService;
     }
 
     public Field create(UUID id, FieldCreateDTO fieldCreateDTO) {
@@ -84,8 +87,12 @@ public class FieldServiceImpl implements FieldService {
 
 
     public boolean isTreePlantingAvailableInField(Field field) {
-        int maxTreesToBePlanted = (int)(field.getArea() / 100 );
+        int maxTreesToBePlanted = (int) (field.getArea() / 100);
         int TreeCurrentCount = field.getTrees().size();
-        return maxTreesToBePlanted > TreeCurrentCount ;
+        return maxTreesToBePlanted > TreeCurrentCount;
+    }
+
+    public boolean isFieldHarvestedForThisSeason(Field field) {
+        return harvestDetailService.harvestDetailsOfFieldNotYetCalculatedInHarvest(field) == 0;
     }
 }

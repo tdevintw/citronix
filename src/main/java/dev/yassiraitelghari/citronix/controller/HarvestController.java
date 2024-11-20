@@ -1,5 +1,6 @@
 package dev.yassiraitelghari.citronix.controller;
 
+import dev.yassiraitelghari.citronix.domain.Harvest;
 import dev.yassiraitelghari.citronix.service.HarvestService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,9 @@ public class HarvestController {
     public HarvestController(@Qualifier("HarvestServiceImpl") HarvestService harvestService){
         this.harvestService = harvestService;
     }
-    @GetMapping("/api/harvest/field/{id}")
+    @GetMapping("/field/{id}")
     public ResponseEntity<?> harvestField(@PathVariable UUID id){
-        harvestService.createHarvestField(id);
+        Harvest harvest = harvestService.createHarvestField(id);
+        return ResponseEntity.status(201).body(harvest);
     }
 }
