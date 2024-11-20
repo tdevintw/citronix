@@ -64,4 +64,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleTreeWithUUIDNotFound(TreeWithUUIDNotFoundException e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler(TreeAlreadyHarvestedException.class)
+    public ResponseEntity<?> handleTreeHadBeenHarvested(TreeAlreadyHarvestedException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }

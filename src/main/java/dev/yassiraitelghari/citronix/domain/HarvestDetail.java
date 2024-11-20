@@ -1,5 +1,6 @@
 package dev.yassiraitelghari.citronix.domain;
 
+import dev.yassiraitelghari.citronix.domain.enums.Season;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,9 @@ public class HarvestDetail {
     private double quantity;
 
     private LocalDateTime harvestDate ;
+
+    private Season season ;
+
 
     @ManyToOne
     private Tree tree ;

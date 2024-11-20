@@ -2,10 +2,13 @@ package dev.yassiraitelghari.citronix.service.impl;
 
 import dev.yassiraitelghari.citronix.domain.HarvestDetail;
 import dev.yassiraitelghari.citronix.domain.Tree;
+import dev.yassiraitelghari.citronix.domain.enums.Season;
+import dev.yassiraitelghari.citronix.exception.TreeAlreadyHarvestedException;
 import dev.yassiraitelghari.citronix.repository.HarvestDetailRepository;
 import dev.yassiraitelghari.citronix.repository.HarvestRepository;
 import dev.yassiraitelghari.citronix.service.HarvestService;
 import dev.yassiraitelghari.citronix.service.TreeService;
+import dev.yassiraitelghari.citronix.utils.GetSeason;
 import dev.yassiraitelghari.citronix.vm.HarvestTreeVM;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,9 @@ public class HarvestServiceImpl implements HarvestService {
 
     public HarvestTreeVM harvestTree(UUID id) {
         Tree tree = treeService.findById(id);
+        if(isTreeAlreadyHarvestedInSeason(tree)){
+            throw new TreeAlreadyHarvestedException();
+        }
         HarvestDetail harvestDetail = this.TreeToHarvestDetail(tree);
         HarvestDetail harvestDetail1 = harvestDetailRepository.save(harvestDetail);
         HarvestTreeVM harvestTreeVM = new HarvestTreeVM(harvestDetail1);
@@ -38,11 +44,13 @@ public class HarvestServiceImpl implements HarvestService {
         harvestDetail.setTree(tree);
         harvestDetail.setHarvestDate(LocalDateTime.now());
         harvestDetail.setQuantity(treeService.treeProductivity(tree));
+        harvestDetail.setSeason(GetSeason.season(LocalDateTime.now()));
         return harvestDetail;
     }
 
     public boolean isTreeAlreadyHarvestedInSeason(Tree tree) {
-        return false;
+        Season season = GetSeason.season(LocalDateTime.now());
+        return harvestDetailRepository.countHarvestDetailByTreeAndSeason(tree , season) >0;
     }
 
 }

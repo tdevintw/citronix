@@ -24,8 +24,6 @@ public class Harvest {
 
     private LocalDateTime harvestDate ;
 
-    private Season season ;
-
     @OneToMany(mappedBy = "harvest")
     private List<HarvestDetail> harvestDetails ;
 
