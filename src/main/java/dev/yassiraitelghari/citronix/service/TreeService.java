@@ -8,6 +8,8 @@ public interface TreeService {
 
     Tree findById(UUID id);
     Tree create(UUID id);
-
+    void delete(UUID id);
     double treeProductivity(Tree tree);
+
+
 }

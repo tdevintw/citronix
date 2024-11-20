@@ -74,5 +74,11 @@ public class TreeServiceImpl implements TreeService {
         }
     }
 
+    public void delete(UUID id){
+        Tree tree = this.findById(id);
+        treeRepository.deleteById(tree.getId());
+    }
+
+
 
 }
