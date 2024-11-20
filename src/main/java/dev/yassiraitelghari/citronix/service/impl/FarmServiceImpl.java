@@ -3,6 +3,7 @@ package dev.yassiraitelghari.citronix.service.impl;
 import dev.yassiraitelghari.citronix.domain.Farm;
 import dev.yassiraitelghari.citronix.dto.Farm.FarmCreateDTO;
 import dev.yassiraitelghari.citronix.exception.FarmWithUUIDNotFoundException;
+import dev.yassiraitelghari.citronix.exception.NoFarmsWithTotalFieldAreaLessThen4000Exception;
 import dev.yassiraitelghari.citronix.mapper.FarmMapper;
 import dev.yassiraitelghari.citronix.repository.FarmRepository;
 import dev.yassiraitelghari.citronix.service.FarmService;
@@ -50,6 +51,9 @@ public class FarmServiceImpl implements FarmService {
 
     public List<FarmVM> farmsWithFieldsAreaLessThen4000M() {
         List<Farm> farms = farmRepository.farmsWithFieldsAreaLessThen4000M();
+        if(farms.isEmpty()){
+            throw new NoFarmsWithTotalFieldAreaLessThen4000Exception();
+        }
         return farms.stream().map(FarmVM::new).toList();
     }
 

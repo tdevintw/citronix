@@ -69,4 +69,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleTreeHadBeenHarvested(TreeAlreadyHarvestedException e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler(NoFarmsWithTotalFieldAreaLessThen4000Exception.class)
+    public ResponseEntity<?> handleFarmsWithTotalFieldAreaLessThen4000(NoFarmsWithTotalFieldAreaLessThen4000Exception e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(HarvestDetailWithUUIDNotFoundException.class)
+    public ResponseEntity<?> handleHarvestDetailUUIDNotFound(HarvestDetailWithUUIDNotFoundException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }

@@ -3,6 +3,7 @@ package dev.yassiraitelghari.citronix.service.impl;
 import dev.yassiraitelghari.citronix.domain.HarvestDetail;
 import dev.yassiraitelghari.citronix.domain.Tree;
 import dev.yassiraitelghari.citronix.domain.enums.Season;
+import dev.yassiraitelghari.citronix.exception.HarvestDetailWithUUIDNotFoundException;
 import dev.yassiraitelghari.citronix.exception.TreeAlreadyHarvestedException;
 import dev.yassiraitelghari.citronix.repository.HarvestDetailRepository;
 import dev.yassiraitelghari.citronix.repository.HarvestRepository;
@@ -27,9 +28,13 @@ public class HarvestServiceImpl implements HarvestService {
         this.harvestDetailRepository = harvestDetailRepository;
     }
 
+    public Optional<HarvestDetail> findById(UUID id){
+        return harvestDetailRepository.findById(id);
+    }
+
     public HarvestTreeVM harvestTree(UUID id) {
         Tree tree = treeService.findById(id);
-        if(isTreeAlreadyHarvestedInSeason(tree)){
+        if (isTreeAlreadyHarvestedInSeason(tree)) {
             throw new TreeAlreadyHarvestedException();
         }
         HarvestDetail harvestDetail = this.TreeToHarvestDetail(tree);
@@ -50,7 +55,15 @@ public class HarvestServiceImpl implements HarvestService {
 
     public boolean isTreeAlreadyHarvestedInSeason(Tree tree) {
         Season season = GetSeason.season(LocalDateTime.now());
-        return harvestDetailRepository.countHarvestDetailByTreeAndSeason(tree , season) >0;
+        return harvestDetailRepository.countHarvestDetailByTreeAndSeason(tree, season) > 0;
+    }
+
+    public void delete(UUID id) {
+        Optional<HarvestDetail> harvestDetail = this.findById(id);
+        if(harvestDetail.isEmpty()){
+            throw new HarvestDetailWithUUIDNotFoundException();
+        }
+        harvestDetailRepository.deleteById(id);
     }
 
 }

@@ -32,13 +32,13 @@ public class FieldController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         fieldService.delete(id);
-        return ResponseEntity.status(201).body("Field was deleted");
+        return ResponseEntity.status(202).body("Field was deleted");
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable UUID id, @Valid @RequestBody FieldCreateDTO fieldCreateDTO) {
         Field field = fieldService.update(id, fieldCreateDTO);
         FieldVM fieldVM = new FieldVM(field);
-        return ResponseEntity.status(201).body(fieldVM);
+        return ResponseEntity.status(202).body(fieldVM);
     }
 }

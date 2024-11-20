@@ -51,10 +51,7 @@ public class FarmController {
     @GetMapping("/farmsWithFieldsLessThen4000")
     public ResponseEntity<?> farmsWithFieldsAreaTotalLessThen4000() {
         List<FarmVM> farms = farmService.farmsWithFieldsAreaLessThen4000M();
-        if (farms.isEmpty()) {
-            return ResponseEntity.status(200).body("There is no farm where its fields area total is less then 4000");
-        } else {
             return ResponseEntity.status(200).body(farms);
-        }
+
     }
 }

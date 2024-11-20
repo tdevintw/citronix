@@ -21,7 +21,7 @@ public class TreeController {
         Tree tree = treeService.findById(id);
         TreeVM treeVM = new TreeVM(tree);
         treeVM.setProductivity(treeService.treeProductivity(tree));
-        return ResponseEntity.status(201).body(treeVM);
+        return ResponseEntity.status(202).body(treeVM);
     }
 
     @PostMapping("/{id}")
@@ -35,6 +35,6 @@ public class TreeController {
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id){
         treeService.delete(id);
-       return  ResponseEntity.status(201).body("Tree was deleted");
+       return  ResponseEntity.status(202).body("Tree was deleted");
     }
 }
