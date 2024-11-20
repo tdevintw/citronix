@@ -81,4 +81,11 @@ public class FieldServiceImpl implements FieldService {
         field.get().setArea(fieldCreateDTO.getArea());
         return fieldRepository.save(field.get());
     }
+
+
+    public boolean isTreePlantingAvailableInField(Field field) {
+        int maxTreesToBePlanted = (int)(field.getArea() / 10 );
+        int TreeCurrentCount = field.getTrees().size();
+        return maxTreesToBePlanted > TreeCurrentCount ;
+    }
 }

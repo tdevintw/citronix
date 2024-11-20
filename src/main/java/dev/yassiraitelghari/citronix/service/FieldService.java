@@ -9,9 +9,12 @@ import java.util.UUID;
 public interface FieldService {
 
     Optional<Field> findById(UUID id);
+
     Field create(UUID id, FieldCreateDTO fieldCreateDTO);
 
     void delete(UUID id);
 
-    Field update(UUID id , FieldCreateDTO fieldCreateDTO);
+    Field update(UUID id, FieldCreateDTO fieldCreateDTO);
+
+    boolean isTreePlantingAvailableInField(Field field);
 }

@@ -48,4 +48,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleFieldUUIDNotFound(FieldWithUUIDNotFoundException e){
         return  ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler(TreePlantingException.class)
+    public ResponseEntity<?> handlePlantingMonthNotAccurate(TreePlantingException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+
+    @ExceptionHandler(SpaceBetweenTreesException.class)
+    public ResponseEntity<?> handleSpaceNotAvailableForPlanting(SpaceBetweenTreesException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }
