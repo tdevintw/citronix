@@ -18,8 +18,8 @@ public class HarvestController {
     public HarvestController(@Qualifier("HarvestServiceImpl") HarvestService harvestService){
         this.harvestService = harvestService;
     }
-//    @GetMapping("/api/harvest/field/{id}")
-//    public ResponseEntity<?> harvestField(@PathVariable UUID id){
-//
-//    }
+    @GetMapping("/api/harvest/field/{id}")
+    public ResponseEntity<?> harvestField(@PathVariable UUID id){
+        harvestService.createHarvestField(id);
+    }
 }

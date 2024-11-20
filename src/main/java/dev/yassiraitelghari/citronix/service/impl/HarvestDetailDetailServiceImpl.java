@@ -1,5 +1,6 @@
 package dev.yassiraitelghari.citronix.service.impl;
 
+import dev.yassiraitelghari.citronix.domain.Field;
 import dev.yassiraitelghari.citronix.domain.HarvestDetail;
 import dev.yassiraitelghari.citronix.domain.Tree;
 import dev.yassiraitelghari.citronix.domain.enums.Season;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -63,6 +65,10 @@ public class HarvestDetailDetailServiceImpl implements HarvestDetailService {
             throw new HarvestDetailWithUUIDNotFoundException();
         }
         harvestDetailRepository.deleteById(id);
+    }
+
+    public List<HarvestDetail> harvestDetailsOfAField(Field field){
+        return harvestDetailRepository.harvestDetailOfField(field.getId());
     }
 
 }

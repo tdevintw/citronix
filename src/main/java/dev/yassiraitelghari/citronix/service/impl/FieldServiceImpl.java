@@ -84,7 +84,7 @@ public class FieldServiceImpl implements FieldService {
 
 
     public boolean isTreePlantingAvailableInField(Field field) {
-        int maxTreesToBePlanted = (int)(field.getArea() / 10 );
+        int maxTreesToBePlanted = (int)(field.getArea() / 100 );
         int TreeCurrentCount = field.getTrees().size();
         return maxTreesToBePlanted > TreeCurrentCount ;
     }

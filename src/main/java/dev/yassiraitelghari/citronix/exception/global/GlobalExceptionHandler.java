@@ -79,4 +79,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleHarvestDetailUUIDNotFound(HarvestDetailWithUUIDNotFoundException e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler(NoTreesPlantedInFieldException.class)
+    public ResponseEntity<?> handleNoTreesFoundInField(NoTreesPlantedInFieldException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }
