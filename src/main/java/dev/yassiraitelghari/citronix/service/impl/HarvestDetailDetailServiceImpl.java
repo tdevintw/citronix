@@ -29,6 +29,7 @@ public class HarvestDetailDetailServiceImpl implements HarvestDetailService {
         this.harvestDetailRepository = harvestDetailRepository;
     }
 
+
     public Optional<HarvestDetail> findById(UUID id) {
         return harvestDetailRepository.findById(id);
     }

@@ -9,7 +9,9 @@ import dev.yassiraitelghari.citronix.repository.FieldRepository;
 import dev.yassiraitelghari.citronix.service.FarmService;
 import dev.yassiraitelghari.citronix.service.FieldService;
 import dev.yassiraitelghari.citronix.service.HarvestDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,18 +22,23 @@ public class FieldServiceImpl implements FieldService {
 
     private final FieldRepository fieldRepository;
     private final FarmService farmService;
-    private final HarvestDetailService harvestDetailService;
+    private  HarvestDetailService harvestDetailService;
+
+
+    public FieldServiceImpl(@Qualifier("FarmServiceImpl") FarmService farmService, FieldRepository fieldRepository) {
+        this.farmService = farmService;
+        this.fieldRepository = fieldRepository;
+    }
 
     public Optional<Field> findById(UUID id) {
         return fieldRepository.findById(id);
     }
 
-    public FieldServiceImpl(@Qualifier("FarmServiceImpl") FarmService farmService, FieldRepository fieldRepository, @Qualifier("HarvestDetailServiceImpl") HarvestDetailService harvestDetailService) {
-        this.farmService = farmService;
-        this.fieldRepository = fieldRepository;
+    @Autowired
+    @Lazy
+    public void setHarvestDetailService(@Qualifier("HarvestDetailServiceImpl")HarvestDetailService harvestDetailService){
         this.harvestDetailService = harvestDetailService;
     }
-
     public Field create(UUID id, FieldCreateDTO fieldCreateDTO) {
         Optional<Farm> farmOptional = farmService.findById(id);
         if (farmOptional.isEmpty()) {

@@ -84,4 +84,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleNoTreesFoundInField(NoTreesPlantedInFieldException e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler(FieldAlreadyHarvestedForTheSeasonException.class)
+    public ResponseEntity<?> handleFieldAlreadyHarvestedInTheSeason(FieldAlreadyHarvestedForTheSeasonException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }
