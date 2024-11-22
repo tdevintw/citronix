@@ -52,6 +52,4 @@ public class HarvestServiceImpl implements HarvestService {
         harvestRepository.save(harvest);
         return harvestRepository.save(harvest);
     }
-
-
 }
