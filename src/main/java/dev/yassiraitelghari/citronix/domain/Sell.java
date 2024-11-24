@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -15,9 +16,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 public class Sell {
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id ;
-    private  double price ;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+    private double price;
+    private double quantity;
+    private double revenue;
     @ManyToOne
-    private Harvest harvest ;
+    private Harvest harvest;
+    private LocalDateTime sellDate;
 }

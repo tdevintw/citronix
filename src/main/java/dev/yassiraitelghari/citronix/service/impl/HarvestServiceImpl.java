@@ -52,4 +52,9 @@ public class HarvestServiceImpl implements HarvestService {
         harvestRepository.save(harvest);
         return harvestRepository.save(harvest);
     }
+
+    public Optional<Harvest> findById(UUID id){
+        return harvestRepository.findById(id);
+    }
+
 }
